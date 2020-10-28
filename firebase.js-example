@@ -1,0 +1,11 @@
+import firebase from 'firebase/app';
+import "firebase/auth"; //for authentication
+import "firebase/database"; 
+import "firebase/storage";
+const firebaseConfig = {
+   // Update with your-Firebase-Configuration
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  export default firebase;

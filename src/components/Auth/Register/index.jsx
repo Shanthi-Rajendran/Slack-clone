@@ -84,6 +84,11 @@ class Register extends React.Component {
 
   displayErrors = errors =>
     errors.map((error, i) => <p key={i}>{error.message}</p>);
+  
+  handleInputError = (errors, inputName) => {
+    return errors.some(error => error.message.toLowerCase().includes(inputName)) 
+    ? "error" : "";
+  };
 
   render() {
     const { username, email, password, passwordConfirmation , errors , loading} = this.state;
@@ -106,6 +111,7 @@ class Register extends React.Component {
                 onChange={this.handleChange}
                 value={username}
                 type="text"
+                // className = "error"
               />
 
               <Form.Input
@@ -117,6 +123,7 @@ class Register extends React.Component {
                 onChange={this.handleChange}
                 value={email}
                 type="email"
+                className={this.handleInputError(errors, "email")}
               />
 
               <Form.Input
@@ -128,6 +135,7 @@ class Register extends React.Component {
                 onChange={this.handleChange}
                 value={password}
                 type="password"
+                className={this.handleInputError(errors, "password")}
               />
 
               <Form.Input
@@ -139,7 +147,8 @@ class Register extends React.Component {
                 onChange={this.handleChange}
                 value={passwordConfirmation}
                 type="password"
-              />
+                className={this.handleInputError(errors, "password")}
+              /> 
 
               <Button disabled = {loading} color="orange" fluid size="large">
                 Submit

@@ -40,7 +40,7 @@ class Register extends React.Component {
           console.error(err);
           this.setState({
             loading: false,
-            
+            errors: this.state.errors.concat(err)
           })
         });
     }  

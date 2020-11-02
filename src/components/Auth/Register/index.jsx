@@ -18,7 +18,9 @@ class Register extends React.Component {
     email: "",
     password: "",
     passwordConfirmation: "",
-    errors:[]
+    errors:[],
+    loading: false,
+    usersRef: firebase.database().ref("users")
   };
 
   handleChange = event => {
@@ -43,6 +45,9 @@ class Register extends React.Component {
             )}?d=identicon`
           })
           .then(() => {
+            this.saveUser(createdUser).then(() => {
+              console.log("user saved");
+            });
             this.setState({
               loading:false
             })
@@ -107,6 +112,14 @@ class Register extends React.Component {
     ? "error" : "";
   };
 
+  saveUser = createdUser => {
+    return this.state.usersRef.child(createdUser.user.uid).set({
+      name: createdUser.user.displayName,
+      avatar: createdUser.user.photoURL
+    });
+  };
+
+
   render() {
     const { username, email, password, passwordConfirmation , errors , loading} = this.state;
 
@@ -166,7 +179,8 @@ class Register extends React.Component {
                 className={this.handleInputError(errors, "password")}
               /> 
 
-              <Button disabled = {loading} color="orange" fluid size="large">
+              <Button disabled = {loading} color="orange" fluid size="large"
+               className={loading ? "loading" : ""}>
                 Submit
               </Button>
             </Segment>
